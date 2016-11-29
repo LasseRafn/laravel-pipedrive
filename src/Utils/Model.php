@@ -51,6 +51,8 @@ class Model
 	 * @param int        $start
 	 * @param int        $limit
 	 *
+	 * Todo implement pagination (get ALL, instead of only the limit)
+	 *
 	 * @return array
 	 */
 	public function all( array $fields = null, int $start = 0, int $limit = 100 )
