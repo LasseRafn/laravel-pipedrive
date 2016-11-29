@@ -9,11 +9,25 @@ class Request
 	protected $api_token;
 	public    $curl;
 
-	public function __construct( $baseUri = '' )
+	public function __construct( $baseUri = '')
 	{
+		$this->api_token = config('pipedrive.api_token', $apiToken);
+
 		$this->curl = new Client( [
 			'base_uri' => $baseUri
 		] );
+	}
+
+	/**
+	 * @param $token
+	 *
+	 * @return $this
+	 */
+	public function setApiToken($token)
+	{
+		$this->api_token = $token;
+
+		return $this;
 	}
 
 	private function buildEntity( $entity, $id = null, $fields = null )
@@ -30,7 +44,7 @@ class Request
 	{
 		try
 		{
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . config( 'pipedrive.api_token' ) . '&start=' . $start . '&limit=' . $limit;
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this-$this->api_token . '&start=' . $start . '&limit=' . $limit;
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
@@ -45,7 +59,7 @@ class Request
 		try
 		{
 			$value = urlencode($value);
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . config( 'pipedrive.api_token' ) . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
@@ -68,7 +82,7 @@ class Request
 				$query .= "&{$attr}={$value}";
 			}
 
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . config( 'pipedrive.api_token' ) . '&start=' . $start . '&limit=' . $limit . $query;
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
 
 			$response = $this->curl->get( $url );
 
@@ -83,10 +97,10 @@ class Request
 	{
 		try
 		{
-			$url = $this->buildEntity( $entity ) . '?api_token=' . config( 'pipedrive.api_token' );
+			$url = $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 
 			$response = $this->curl->post( $url, [
-				'api_token' => config( 'pipedrive.api_token' ),
+				'api_token' => $this->api_token,
 				'json'      => $data
 			] );
 
@@ -101,10 +115,10 @@ class Request
 	{
 		try
 		{
-			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . config( 'pipedrive.api_token' );
+			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . $this->api_token;
 
 			$response = $this->curl->put( $url, [
-				'api_token' => config( 'pipedrive.api_token' ),
+				'api_token' => $this->api_token,
 				'json'      => $data
 			] );
 

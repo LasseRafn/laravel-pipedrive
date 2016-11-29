@@ -20,6 +20,18 @@ class Pipedrive
 	}
 
 	/**
+	 * @param $token
+	 *
+	 * @return $this
+	 */
+	public function setApiToken($token)
+	{
+		$this->request->setApiToken($token);
+
+		return $this;
+	}
+
+	/**
 	 * @return Model|Person
 	 */
 	public function persons()
