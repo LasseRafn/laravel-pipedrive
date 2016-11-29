@@ -11,7 +11,7 @@ class Request
 
 	public function __construct( $baseUri = '')
 	{
-		$this->api_token = config('pipedrive.api_token', $apiToken);
+		$this->api_token = config('pipedrive.api_token');
 
 		$this->curl = new Client( [
 			'base_uri' => $baseUri
