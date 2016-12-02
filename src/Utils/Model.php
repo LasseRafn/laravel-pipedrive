@@ -9,7 +9,7 @@ class Model
 	/** @var integer */
 	public $id;
 
-	public function updateEntity($newVal)
+	public function updateEntity( $newVal )
 	{
 		$this->entity = $newVal;
 
@@ -34,13 +34,13 @@ class Model
 		{
 			if ( isset( $data[ $fillable ] ) )
 			{
-				if(!method_exists($this, 'set' . ucfirst(camel_case($fillable)) . 'Attribute' ))
+				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute' ) )
 				{
-					$this->setAttribute($fillable, $data[$fillable]);
+					$this->setAttribute( $fillable, $data[ $fillable ] );
 				}
 				else
 				{
-					$this->setAttribute($fillable, $this->{'set' . ucfirst(camel_case($fillable)) . 'Attribute'}($data[$fillable]));
+					$this->setAttribute( $fillable, $this->{'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute'}( $data[ $fillable ] ) );
 				}
 			}
 		}
@@ -57,10 +57,17 @@ class Model
 	 */
 	public function all( array $fields = null, int $start = 0, int $limit = 100 )
 	{
-		$items  = $this->request->get( $this->entity, null, $fields, $start, $limit );
+		try
+		{
+			$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
+		} catch ( \Exception $exception )
+		{
+			throw $exception;
+		}
+
 		$models = [];
 
-		if(!$items)
+		if ( ! $items )
 		{
 			return [];
 		}
@@ -85,7 +92,7 @@ class Model
 	{
 		$item = $this->request->get( $this->entity, $id, $fields, $start, $limit );
 
-		if( ! $item)
+		if ( ! $item )
 		{
 			return false;
 		}
@@ -105,7 +112,7 @@ class Model
 	{
 		$item = $this->request->getBy( $this->entity, $attr, $value, $start, $limit );
 
-		if( ! $item || count($item) == 0)
+		if ( ! $item || count( $item ) == 0 )
 		{
 			return false;
 		}
@@ -124,15 +131,15 @@ class Model
 	{
 		$items = $this->request->getByMany( $this->entity, $queries, $start, $limit );
 
-		if( ! $items || count($items) == 0)
+		if ( ! $items || count( $items ) == 0 )
 		{
 			return [];
 		}
 
-		$models= [];
-		foreach($items as $item)
+		$models = [];
+		foreach ( $items as $item )
 		{
-			$models[] = new $this->modelClass($this->request, $item);
+			$models[] = new $this->modelClass( $this->request, $item );
 		}
 
 		return $models;
@@ -149,7 +156,7 @@ class Model
 	{
 		$item = $this->request->getByMany( $this->entity, $queries, $start, $limit );
 
-		if( ! $item || count($item) == 0)
+		if ( ! $item || count( $item ) == 0 )
 		{
 			return false;
 		}
