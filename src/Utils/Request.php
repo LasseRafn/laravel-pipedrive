@@ -44,7 +44,7 @@ class Request
 	{
 		try
 		{
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this-$this->api_token . '&start=' . $start . '&limit=' . $limit;
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit;
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
