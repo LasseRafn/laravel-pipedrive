@@ -51,30 +51,39 @@ class Model
 	 * @param int        $start
 	 * @param int        $limit
 	 *
-	 * Todo implement pagination (get ALL, instead of only the limit)
-	 *
 	 * @return array
 	 */
-	public function all( array $fields = null, int $start = 0, int $limit = 100 )
+	public function all( array $fields = null )
 	{
-		try
-		{
-			$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
-		} catch ( \Exception $exception )
-		{
-			throw $exception;
-		}
+		$models  = [];
+		$hasMore = true;
+		$start   = 0;
+		$limit   = 500;
 
-		$models = [];
 
-		if ( ! $items )
+		while ( $hasMore )
 		{
-			return [];
-		}
+			try
+			{
+				$response = $this->request->getWithResponse( $this->entity, null, $fields, $start, $limit );
 
-		foreach ( $items as $item )
-		{
-			$models[] = new $this->modelClass( $this->request, $item );
+				if ( is_array( $response->data ) )
+				{
+					foreach ( $response->data as $item )
+					{
+						$models[] = new $this->modelClass( $this->request, $item );
+					}
+				}
+				else
+				{
+					$hasMore = false;
+				}
+			} catch ( \Exception $exception )
+			{
+				throw $exception;
+			}
+
+			$start += $limit;
 		}
 
 		return $models;

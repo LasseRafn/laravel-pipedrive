@@ -40,6 +40,20 @@ class Request
 		return json_decode( $data, true )['data'];
 	}
 
+	public function getWithResponse( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100 )
+	{
+		try
+		{
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit;
+			$response = $this->curl->get( $url );
+
+			return json_decode( $response->getBody() );
+		} catch ( \Exception $exception )
+		{
+			throw new CurlError( $exception->getMessage(), $exception->getCode() );
+		}
+	}
+
 	public function get( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100 )
 	{
 		try
