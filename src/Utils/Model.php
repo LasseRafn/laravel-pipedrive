@@ -65,11 +65,11 @@ class Model
 		{
 			try
 			{
-				$response = $this->request->getWithResponse( $this->entity, null, $fields, $start, $limit );
+				$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
 
-				if ( is_array( $response->data ) )
+				if ( is_array( $items ) )
 				{
-					foreach ( $response->data as $item )
+					foreach ( $items as $item )
 					{
 						$models[] = new $this->modelClass( $this->request, $item );
 					}
