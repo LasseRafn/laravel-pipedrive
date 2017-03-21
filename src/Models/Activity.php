@@ -46,19 +46,6 @@ class Activity extends Model
 	 */
 	public $org_id;
 
-	/**
-	 * @return DealProduct
-	 */
-	public function products()
-	{
-		$dealProduct = new DealProduct($this->request);
-		$newEntity = $dealProduct->getEntity();
-		$newEntity = str_replace(':dealid', $this->id, $newEntity);
-
-		$dealProduct->updateEntity($newEntity);
-
-		return $dealProduct;
-	}
 
 	function setOrgIdAttribute(array $org)
 	{
