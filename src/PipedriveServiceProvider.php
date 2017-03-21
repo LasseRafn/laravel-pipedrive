@@ -22,4 +22,8 @@ class PipedriveServiceProvider extends ServiceProvider
 
 		$this->publishes([$configPath => $publishPath], 'config');
 	}
+
+	public function register() {
+
+	}
 }
