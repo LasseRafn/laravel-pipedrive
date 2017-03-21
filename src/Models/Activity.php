@@ -45,15 +45,4 @@ class Activity extends Model
 	 * @var Organization|integer
 	 */
 	public $org_id;
-
-
-	function setOrgIdAttribute(array $org)
-	{
-		return new Organization($this->request, $org);
-	}
-
-	function setPersonIdAttribute(array $person)
-	{
-		return new Person($this->request, $person);
-	}
 }
