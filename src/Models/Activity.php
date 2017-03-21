@@ -69,9 +69,4 @@ class Activity extends Model
 	{
 		return new Person($this->request, $person);
 	}
-
-	function setDealIdAttribute(array $deal)
-	{
-		return new Deal($this->request, $deal);
-	}
 }
