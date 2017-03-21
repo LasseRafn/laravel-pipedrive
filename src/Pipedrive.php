@@ -1,5 +1,6 @@
 <?php namespace LasseRafn\Pipedrive;
 
+use LasseRafn\Pipedrive\Models\Activity;
 use LasseRafn\Pipedrive\Models\Deal;
 use LasseRafn\Pipedrive\Models\Organization;
 use LasseRafn\Pipedrive\Models\OrganizationField;
@@ -94,5 +95,13 @@ class Pipedrive
 	public function webhooks()
 	{
 		return new Webhook($this->request);
+	}
+
+	/**
+	 * @return Model|Activity()
+	 */
+	public function activities()
+	{
+		return new Activity($this->request);
 	}
 }
