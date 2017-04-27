@@ -26,9 +26,24 @@ class Model
 	 */
 	protected $request;
 
-	function __construct( Request $request, $data = [] )
+	function __construct( Request $request, $data = [], $bypassFillable = false )
 	{
 		$this->request = $request;
+
+		if( $bypassFillable ) {
+			foreach($data as $key => $value) {
+				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $key ) ) . 'Attribute' ) )
+				{
+					$this->setAttribute( $key, $value );
+				}
+				else
+				{
+					$this->setAttribute( $key, $this->{'set' . ucfirst( camel_case( $key ) ) . 'Attribute'}( $value ) );
+				}
+			}
+
+			return;
+		}
 
 		foreach ( $this->fillable as $fillable )
 		{
@@ -141,7 +156,7 @@ class Model
 			return false;
 		}
 
-		return new $this->modelClass( $this->request, $item );
+		return new $this->modelClass( $this->request, $item, true );
 	}
 
 	/**
