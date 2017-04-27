@@ -66,7 +66,7 @@ class Person extends Model
 	{
 		if ( is_array( $org ) )
 		{
-			return new Organization( $this->request, $org );
+			return new Organization( $this->request, $org, true );
 		}
 
 		return $org;
