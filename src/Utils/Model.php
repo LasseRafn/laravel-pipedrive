@@ -90,6 +90,41 @@ class Model
 	}
 
 	/**
+	 * @param array|null $fields
+	 * @param int        $start
+	 * @param int        $limit
+	 *
+	 * @return array
+	 */
+	public function get( array $fields = null, $start = 0, $limit = 100 )
+	{
+		$models = [];
+
+
+		try
+		{
+			$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
+
+			if ( is_array( $items ) )
+			{
+				foreach ( $items as $item )
+				{
+					$models[] = new $this->modelClass( $this->request, $item );
+				}
+			}
+			else
+			{
+				$hasMore = false;
+			}
+		} catch ( \Exception $exception )
+		{
+			throw $exception;
+		}
+
+		return $models;
+	}
+
+	/**
 	 * @param int        $id
 	 * @param array|null $fields
 	 * @param int        $start
