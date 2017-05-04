@@ -101,13 +101,25 @@ class Request
 			$url = $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 
 			$requestData = [
-				'api_token' => $this->api_token,
-				'json'      => $data
+				'api_token' => $this->api_token
 			];
 
 			if ( $multipartFormData )
 			{
-				$requestData['multipart'] = $multipartFormData;
+				$requestData['multipart']   = [];
+				$requestData['multipart'][] = $multipartFormData;
+
+				foreach ( $data as $key => $value )
+				{
+					$requestData['multipart'][] = [
+						'name'     => $key,
+						'contents' => $value
+					];
+				}
+			}
+			else
+			{
+				$requestData['json'] = $data;
 			}
 
 			$response = $this->curl->post( $url, $requestData );
