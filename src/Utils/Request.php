@@ -1,4 +1,5 @@
 <?php
+
 namespace LasseRafn\Pipedrive\Utils;
 
 use GuzzleHttp\Client;
@@ -9,9 +10,9 @@ class Request
 	protected $api_token;
 	public    $curl;
 
-	public function __construct( $baseUri = '')
+	public function __construct( $baseUri = '' )
 	{
-		$this->api_token = config('pipedrive.api_token');
+		$this->api_token = config( 'pipedrive.api_token' );
 
 		$this->curl = new Client( [
 			'base_uri' => $baseUri
@@ -23,7 +24,7 @@ class Request
 	 *
 	 * @return $this
 	 */
-	public function setApiToken($token)
+	public function setApiToken( $token )
 	{
 		$this->api_token = $token;
 
@@ -58,7 +59,7 @@ class Request
 	{
 		try
 		{
-			$value = urlencode($value);
+			$value    = urlencode( $value );
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
 			$response = $this->curl->get( $url );
 
@@ -78,31 +79,38 @@ class Request
 			foreach ( $queries as $q )
 			{
 				$attr  = key( $q );
-				$value = urlencode($q[ $attr ]);
+				$value = urlencode( $q[ $attr ] );
 				$query .= "&{$attr}={$value}";
 			}
 
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
+			$url = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
 
 			$response = $this->curl->get( $url );
 
-			return $this->getData( $response->getBody());
+			return $this->getData( $response->getBody() );
 		} catch ( \Exception $exception )
 		{
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
-	public function post( string $entity, $data = [] )
+	public function post( string $entity, $data = [], $multipartFormData = null )
 	{
 		try
 		{
 			$url = $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 
-			$response = $this->curl->post( $url, [
+			$requestData = [
 				'api_token' => $this->api_token,
 				'json'      => $data
-			] );
+			];
+
+			if ( $multipartFormData )
+			{
+				$requestData['multipart'] = $multipartFormData;
+			}
+
+			$response = $this->curl->post( $url, $requestData );
 
 			return $this->getData( $response->getBody() );
 		} catch ( \Exception $exception )

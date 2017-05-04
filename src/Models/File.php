@@ -15,12 +15,12 @@ class File extends Model
 		'activity_id',
 		'note_id',
 		'owner_id',
-	    'file_size',
-	    'file_type',
-	    'file_name',
-	    'add_time',
-	    'update_time',
-	    'comment',
+		'file_size',
+		'file_type',
+		'file_name',
+		'add_time',
+		'update_time',
+		'comment',
 	];
 
 	protected $modelClass = self::class;
@@ -39,4 +39,22 @@ class File extends Model
 	public $add_time;
 	public $update_time;
 	public $comment;
+
+	/**
+	 * @param array $fields
+	 *
+	 * @return static
+	 */
+	public function create( array $fields = [], $file = '', $fileName = '' )
+	{
+		$fileData = [
+			'name'     => $fileName,
+			'filename' => $fileName,
+			'contents' => $file
+		];
+
+		$data = $this->request->post( $this->entity, $fields, $fileData );
+
+		return new $this->modelClass( $this->request, $data );
+	}
 }
