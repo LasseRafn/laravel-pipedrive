@@ -48,7 +48,7 @@ class File extends Model
 	public function create( array $fields = [], $file = '', $fileName = '' )
 	{
 		$fileData = [
-			'name'     => $fileName,
+			'name'     => 'file',
 			'filename' => $fileName,
 			'contents' => $file
 		];
