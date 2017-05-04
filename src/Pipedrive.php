@@ -2,6 +2,7 @@
 
 use LasseRafn\Pipedrive\Models\Activity;
 use LasseRafn\Pipedrive\Models\Deal;
+use LasseRafn\Pipedrive\Models\File;
 use LasseRafn\Pipedrive\Models\Organization;
 use LasseRafn\Pipedrive\Models\OrganizationField;
 use LasseRafn\Pipedrive\Models\Person;
@@ -103,5 +104,13 @@ class Pipedrive
 	public function activities()
 	{
 		return new Activity($this->request);
+	}
+
+	/**
+	 * @return Model|File()
+	 */
+	public function files()
+	{
+		return new File($this->request);
 	}
 }
