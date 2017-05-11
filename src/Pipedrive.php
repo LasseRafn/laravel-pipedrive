@@ -9,6 +9,7 @@ use LasseRafn\Pipedrive\Models\Person;
 use LasseRafn\Pipedrive\Models\Pipeline;
 use LasseRafn\Pipedrive\Models\Product;
 use LasseRafn\Pipedrive\Models\Stage;
+use LasseRafn\Pipedrive\Models\User;
 use LasseRafn\Pipedrive\Models\Webhook;
 use LasseRafn\Pipedrive\Utils\Model;
 use LasseRafn\Pipedrive\Utils\Request;
@@ -112,5 +113,13 @@ class Pipedrive
 	public function files()
 	{
 		return new File($this->request);
+	}
+
+	/**
+	 * @return Model|User()
+	 */
+	public function users()
+	{
+		return new User($this->request);
 	}
 }
