@@ -4,7 +4,7 @@ use LasseRafn\Pipedrive\Utils\UserModel;
 
 class User extends UserModel
 {
-	protected $entity   = 'users.';
+	protected $entity   = 'users';
 	protected $fillable = [
 		'id',
 		'name',
