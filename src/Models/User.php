@@ -1,8 +1,8 @@
 <?php namespace LasseRafn\Pipedrive\Models;
 
-use LasseRafn\Pipedrive\Utils\Model;
+use LasseRafn\Pipedrive\Utils\UserModel;
 
-class User extends Model
+class User extends UserModel
 {
 	protected $entity   = 'users.';
 	protected $fillable = [
