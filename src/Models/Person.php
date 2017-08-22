@@ -31,7 +31,7 @@ class Person extends Model
 
 	public function getActivities( $start = 0, $limit = 100 )
 	{
-		$activities = $this->request->get( "{$this->entity}/{$this->id}/activities?start={$start}&limit={$limit}" );
+		$activities = $this->request->get( "{$this->entity}/{$this->id}/activities" );
 
 		return array_map( function ( $activity ) {
 			return new Activity( $activity );
