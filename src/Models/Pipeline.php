@@ -6,7 +6,6 @@ class Pipeline extends Model
 {
 	protected $entity = 'pipelines';
 	protected $modelClass = self::class;
-	protected $fillable = [ 'id', 'name', 'order_nr', 'active' ];
 
 	public $id;
 	public $name;

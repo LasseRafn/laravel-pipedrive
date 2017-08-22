@@ -4,7 +4,6 @@ class UserModel
 {
 	protected $entity;
 	protected $modelClass = self::class;
-	protected $fillable   = [ 'id' ];
 
 	/** @var integer */
 	public $id;
@@ -26,37 +25,16 @@ class UserModel
 	 */
 	protected $request;
 
-	function __construct( Request $request, $data = [], $bypassFillable = false )
+	public function __construct( Request $request, $data = [] )
 	{
 		$this->request = $request;
 
-		if( $bypassFillable ) {
-			foreach($data as $key => $value) {
-				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $key ) ) . 'Attribute' ) )
-				{
-					$this->setAttribute( $key, $value );
-				}
-				else
-				{
-					$this->setAttribute( $key, $this->{'set' . ucfirst( camel_case( $key ) ) . 'Attribute'}( $value ) );
-				}
+		foreach ( $data as $key => $value ) {
+			if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $key ) ) . 'Attribute' ) ) {
+				$this->setAttribute( $key, $value );
 			}
-
-			return;
-		}
-
-		foreach ( $this->fillable as $fillable )
-		{
-			if ( isset( $data[ $fillable ] ) )
-			{
-				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute' ) )
-				{
-					$this->setAttribute( $fillable, $data[ $fillable ] );
-				}
-				else
-				{
-					$this->setAttribute( $fillable, $this->{'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute'}( $data[ $fillable ] ) );
-				}
+			else {
+				$this->setAttribute( $key, $this->{'set' . ucfirst( camel_case( $key ) ) . 'Attribute'}( $value ) );
 			}
 		}
 	}
@@ -68,19 +46,15 @@ class UserModel
 	{
 		$models = [];
 
-		try
-		{
-			$items = $this->request->getSimple( $this->entity);
+		try {
+			$items = $this->request->getSimple( $this->entity );
 
-			if ( is_array( $items ) )
-			{
-				foreach ( $items as $item )
-				{
+			if ( is_array( $items ) ) {
+				foreach ( $items as $item ) {
 					$models[] = new $this->modelClass( $this->request, $item );
 				}
 			}
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw $exception;
 		}
 
@@ -99,8 +73,7 @@ class UserModel
 	{
 		$item = $this->request->get( $this->entity, $id, $fields, $start, $limit );
 
-		if ( ! $item )
-		{
+		if ( ! $item ) {
 			return false;
 		}
 

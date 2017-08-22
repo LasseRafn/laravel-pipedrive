@@ -5,13 +5,6 @@ use LasseRafn\Pipedrive\Utils\Model;
 class Organization extends Model
 {
 	protected $entity   = 'organizations';
-	protected $fillable = [
-		'id',
-		'name',
-		'owner_id',
-		'visible_to',
-		'add_time',
-	];
 
 	protected $modelClass = self::class;
 

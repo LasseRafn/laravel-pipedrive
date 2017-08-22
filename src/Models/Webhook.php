@@ -6,7 +6,6 @@ class Webhook extends Model
 {
 	protected $entity     = 'pushNotifications';
 	protected $modelClass = self::class;
-	protected $fillable   = [ 'subscription_url', 'event', 'user_id', 'http_auth_user', 'http_auth_password', 'update_time', 'add_time' ];
 
 	public $id;
 	public $name;

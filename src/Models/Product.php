@@ -5,18 +5,6 @@ use LasseRafn\Pipedrive\Utils\Model;
 class Product extends Model
 {
 	protected $entity   = 'products';
-	protected $fillable = [
-		'id',
-		'name',
-		'code',
-		'unit',
-		'tax',
-		'active_flag',
-		'owner_id',
-		'visible_to',
-		'add_time',
-	    'prices'
-	];
 
 	protected $modelClass = self::class;
 

@@ -5,27 +5,6 @@ use LasseRafn\Pipedrive\Utils\UserModel;
 class User extends UserModel
 {
 	protected $entity   = 'users';
-	protected $fillable = [
-		'id',
-		'name',
-		'default_currency',
-		'locale',
-		'lang',
-		'email',
-		'phone',
-		'activated',
-		'last_login',
-		'created',
-		'modified',
-		'signup_flow_variation',
-		'has_created_company',
-		'is_admin',
-		'role_id',
-		'timezone_name',
-		'active_flag',
-		'icon_url',
-		'is_you',
-	];
 
 	protected $modelClass = self::class;
 

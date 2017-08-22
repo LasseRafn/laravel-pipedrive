@@ -5,20 +5,6 @@ use LasseRafn\Pipedrive\Utils\Model;
 class Deal extends Model
 {
 	protected $entity   = 'deals';
-	protected $fillable = [
-		'id',
-		'title',
-		'value',
-		'currency',
-		'user_id',
-		'person_id',
-		'org_id',
-		'stage_id',
-		'status',
-		'lost_reason',
-		'visible_to',
-		'add_time',
-	];
 
 	protected $modelClass = self::class;
 

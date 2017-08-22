@@ -5,19 +5,6 @@ use LasseRafn\Pipedrive\Utils\Model;
 class Activity extends Model
 {
 	protected $entity   = 'activities';
-	protected $fillable = [
-		'subject',
-		'done',
-		'type',
-		'due_date',
-		'due_time',
-		'duration',
-		'user_id',
-		'deal_id',
-		'person_id',
-		'org_id',
-		'note'
-	];
 
 	protected $modelClass = self::class;
 

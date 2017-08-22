@@ -4,7 +4,6 @@ class Model
 {
 	protected $entity;
 	protected $modelClass = self::class;
-	protected $fillable   = [ 'id' ];
 
 	/** @var integer */
 	public $id;
@@ -26,37 +25,16 @@ class Model
 	 */
 	protected $request;
 
-	function __construct( Request $request, $data = [], $bypassFillable = false )
+	public function __construct( Request $request, $data = [] )
 	{
 		$this->request = $request;
 
-		if( $bypassFillable ) {
-			foreach($data as $key => $value) {
-				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $key ) ) . 'Attribute' ) )
-				{
-					$this->setAttribute( $key, $value );
-				}
-				else
-				{
-					$this->setAttribute( $key, $this->{'set' . ucfirst( camel_case( $key ) ) . 'Attribute'}( $value ) );
-				}
+		foreach ( $data as $key => $value ) {
+			if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $key ) ) . 'Attribute' ) ) {
+				$this->setAttribute( $key, $value );
 			}
-
-			return;
-		}
-
-		foreach ( $this->fillable as $fillable )
-		{
-			if ( isset( $data[ $fillable ] ) )
-			{
-				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute' ) )
-				{
-					$this->setAttribute( $fillable, $data[ $fillable ] );
-				}
-				else
-				{
-					$this->setAttribute( $fillable, $this->{'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute'}( $data[ $fillable ] ) );
-				}
+			else {
+				$this->setAttribute( $key, $this->{'set' . ucfirst( camel_case( $key ) ) . 'Attribute'}( $value ) );
 			}
 		}
 	}
@@ -76,25 +54,19 @@ class Model
 		$limit   = 500;
 
 
-		while ( $hasMore )
-		{
-			try
-			{
+		while ( $hasMore ) {
+			try {
 				$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
 
-				if ( is_array( $items ) )
-				{
-					foreach ( $items as $item )
-					{
+				if ( is_array( $items ) ) {
+					foreach ( $items as $item ) {
 						$models[] = new $this->modelClass( $this->request, $item );
 					}
 				}
-				else
-				{
+				else {
 					$hasMore = false;
 				}
-			} catch ( \Exception $exception )
-			{
+			} catch ( \Exception $exception ) {
 				throw $exception;
 			}
 
@@ -116,23 +88,18 @@ class Model
 		$models = [];
 
 
-		try
-		{
+		try {
 			$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
 
-			if ( is_array( $items ) )
-			{
-				foreach ( $items as $item )
-				{
+			if ( is_array( $items ) ) {
+				foreach ( $items as $item ) {
 					$models[] = new $this->modelClass( $this->request, $item );
 				}
 			}
-			else
-			{
+			else {
 				$hasMore = false;
 			}
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw $exception;
 		}
 
@@ -151,8 +118,7 @@ class Model
 	{
 		$item = $this->request->get( $this->entity, $id, $fields, $start, $limit );
 
-		if ( ! $item )
-		{
+		if ( ! $item ) {
 			return false;
 		}
 
@@ -171,8 +137,7 @@ class Model
 	{
 		$item = $this->request->getBy( $this->entity, $attr, $value, $start, $limit );
 
-		if ( ! $item || count( $item ) == 0 )
-		{
+		if ( ! $item || count( $item ) == 0 ) {
 			return false;
 		}
 
@@ -190,14 +155,12 @@ class Model
 	{
 		$items = $this->request->getByMany( $this->entity, $queries, $start, $limit );
 
-		if ( ! $items || count( $items ) == 0 )
-		{
+		if ( ! $items || count( $items ) == 0 ) {
 			return [];
 		}
 
 		$models = [];
-		foreach ( $items as $item )
-		{
+		foreach ( $items as $item ) {
 			$models[] = new $this->modelClass( $this->request, $item );
 		}
 
@@ -215,8 +178,7 @@ class Model
 	{
 		$item = $this->request->getByMany( $this->entity, $queries, $start, $limit );
 
-		if ( ! $item || count( $item ) == 0 )
-		{
+		if ( ! $item || count( $item ) == 0 ) {
 			return false;
 		}
 
