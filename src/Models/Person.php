@@ -34,7 +34,7 @@ class Person extends Model
 		$activities = $this->request->get( "{$this->entity}/{$this->id}/activities" );
 
 		return array_map( function ( $activity ) {
-			return new Activity( $activity );
+			return new Activity( $this->request, $activity );
 		}, $activities );
 	}
 }
