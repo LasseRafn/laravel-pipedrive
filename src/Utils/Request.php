@@ -33,7 +33,7 @@ class Request
 
 	private function buildEntity( $entity, $id = null, $fields = null )
 	{
-		return ( $fields ) ? $entity . ':(' . implode( ',', $fields ) . ')' . ( $id ? '/' . $id : '' ) : $entity . ( $id ? '/' . $id : '' );
+		return $fields ? $entity . ':(' . implode( ',', $fields ) . ')' . ( $id ? '/' . $id : '' ) : $entity . ( $id ? '/' . $id : '' );
 	}
 
 	private function getData( $data )
@@ -43,55 +43,47 @@ class Request
 
 	public function getSimple( string $entity )
 	{
-		try
-		{
+		try {
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
-	public function get( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100 )
+	public function get( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100, $query = '' )
 	{
-		try
-		{
-			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit;
+		try {
+			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
 	public function getBy( string $entity, $attr, $value, int $start = 0, int $limit = 1 )
 	{
-		try
-		{
+		try {
 			$value    = urlencode( $value );
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
 	public function getByMany( string $entity, $queries, int $start = 0, int $limit = 1 )
 	{
-		try
-		{
+		try {
 			$query = '';
 
-			foreach ( $queries as $q )
-			{
+			foreach ( $queries as $q ) {
 				$attr  = key( $q );
 				$value = urlencode( $q[ $attr ] );
 				$query .= "&{$attr}={$value}";
@@ -102,53 +94,46 @@ class Request
 			$response = $this->curl->get( $url );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
 	public function post( string $entity, $data = [], $multipartFormData = null )
 	{
-		try
-		{
+		try {
 			$url = $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 
 			$requestData = [
 				'api_token' => $this->api_token
 			];
 
-			if ( $multipartFormData )
-			{
+			if ( $multipartFormData ) {
 				$requestData['multipart']   = [];
 				$requestData['multipart'][] = $multipartFormData;
 
-				foreach ( $data as $key => $value )
-				{
+				foreach ( $data as $key => $value ) {
 					$requestData['multipart'][] = [
 						'name'     => $key,
 						'contents' => $value
 					];
 				}
 			}
-			else
-			{
+			else {
 				$requestData['json'] = $data;
 			}
 
 			$response = $this->curl->post( $url, $requestData );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
 
 	public function put( string $entity, $id, $data = [] )
 	{
-		try
-		{
+		try {
 			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . $this->api_token;
 
 			$response = $this->curl->put( $url, [
@@ -157,8 +142,7 @@ class Request
 			] );
 
 			return $this->getData( $response->getBody() );
-		} catch ( \Exception $exception )
-		{
+		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}

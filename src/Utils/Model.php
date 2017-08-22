@@ -80,16 +80,24 @@ class Model
 	 * @param array|null $fields
 	 * @param int        $start
 	 * @param int        $limit
+	 * @param array        $parameters
 	 *
 	 * @return array
 	 */
-	public function get( array $fields = null, $start = 0, $limit = 100 )
+	public function get( array $fields = null, $start = 0, $limit = 100, $parameters = [] )
 	{
 		$models = [];
 
+		$query = '';
+
+		foreach ( $parameters as $q ) {
+			$attr  = key( $q );
+			$value = urlencode( $q[ $attr ] );
+			$query .= "&{$attr}={$value}";
+		}
 
 		try {
-			$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
+			$items = $this->request->get( $this->entity, null, $fields, $start, $limit, $query );
 
 			if ( is_array( $items ) ) {
 				foreach ( $items as $item ) {
