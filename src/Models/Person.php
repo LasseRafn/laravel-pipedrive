@@ -20,13 +20,21 @@ class Person extends Model
 	public $visible_to;
 	public $add_time;
 
-	function setOrgIdAttribute( $org )
+	public function setOrgIdAttribute( $org )
 	{
-		if ( is_array( $org ) )
-		{
+		if ( is_array( $org ) ) {
 			return new Organization( $this->request, $org, true );
 		}
 
 		return $org;
+	}
+
+	public function getActivities( $start = 0, $limit = 100 )
+	{
+		$activities = $this->request->get( "{$this->entity}/{$this->id}/activities?start={$start}&limit={$limit}" );
+
+		return array_map( function ( $activity ) {
+			return new Activity( $activity );
+		}, $activities );
 	}
 }
