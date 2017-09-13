@@ -45,13 +45,21 @@ class Deal extends Model
 		return $dealProduct;
 	}
 
-	function setOrgIdAttribute(array $org)
+	function setOrgIdAttribute( $org )
 	{
-		return new Organization($this->request, $org);
+		if ( is_array( $org ) ) {
+			return new Organization( $this->request, $org );
+		}
+
+		return $org;
 	}
 
-	function setPersonIdAttribute(array $person)
+	function setPersonIdAttribute( $person )
 	{
-		return new Person($this->request, $person);
+		if ( is_array( $person ) ) {
+			return new Person( $this->request, $person );
+		}
+
+		return $person;
 	}
 }
