@@ -4,13 +4,13 @@ use LasseRafn\Pipedrive\Utils\Model;
 
 class Webhook extends Model
 {
-	protected $entity     = 'pushNotifications';
+	protected $entity     = 'webhooks';
 	protected $modelClass = self::class;
 
 	public $id;
-	public $name;
 	public $subscription_url;
-	public $event;
+	public $event_action;
+	public $event_object;
 	public $user_id;
 	public $http_auth_user;
 	public $http_auth_password;
