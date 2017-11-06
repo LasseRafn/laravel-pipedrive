@@ -20,5 +20,12 @@
         "psr-4": {
             "LasseRafn\\Pipedrive\\": "src"
         }
+    },
+    "extra":{
+        "laravel":{
+           "providers":[
+                "LasseRafn\\Pipedrive\\PipedriveServiceProvider"
+           ]
+        }
     }
 }
