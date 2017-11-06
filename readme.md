@@ -8,7 +8,7 @@
 composer require lasserafn/laravel-pipedrive
 ```
 
-2. Add the PipedriveServiceProvider to your ````config/app.php```` providers array.
+2. (For laravel 5.4 and below) Add the PipedriveServiceProvider to your ````config/app.php```` providers array.
 
 ``` php
 'providers' => [
