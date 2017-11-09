@@ -1,6 +1,7 @@
 <?php namespace LasseRafn\Pipedrive;
 
 use LasseRafn\Pipedrive\Models\Activity;
+use LasseRafn\Pipedrive\Models\ActivityType;
 use LasseRafn\Pipedrive\Models\Deal;
 use LasseRafn\Pipedrive\Models\File;
 use LasseRafn\Pipedrive\Models\Organization;
@@ -105,6 +106,14 @@ class Pipedrive
 	public function activities()
 	{
 		return new Activity($this->request);
+	}
+
+	/**
+	 * @return Model|ActivityType()
+	 */
+	public function activityTypes()
+	{
+		return new ActivityType($this->request);
 	}
 
 	/**
