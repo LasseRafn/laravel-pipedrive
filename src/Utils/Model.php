@@ -58,7 +58,7 @@ class Model
 			try {
 				$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
 
-				if ( is_array( $items ) ) {
+				if ( is_array( $items ) && count($items) > 0 ) {
 					foreach ( $items as $item ) {
 						$models[] = new $this->modelClass( $this->request, $item );
 					}
@@ -103,9 +103,6 @@ class Model
 				foreach ( $items as $item ) {
 					$models[] = new $this->modelClass( $this->request, $item );
 				}
-			}
-			else {
-				$hasMore = false;
 			}
 		} catch ( \Exception $exception ) {
 			throw $exception;
