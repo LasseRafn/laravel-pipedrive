@@ -62,6 +62,10 @@ class Model
 					foreach ( $items as $item ) {
 						$models[] = new $this->modelClass( $this->request, $item );
 					}
+
+					if(count($items) < $limit) {
+						$hasMore = false;
+					}
 				}
 				else {
 					$hasMore = false;
