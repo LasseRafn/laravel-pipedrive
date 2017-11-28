@@ -38,7 +38,7 @@ class Request
 
 	private function getData( $data )
 	{
-		return json_decode( $data, true )['data'];
+		return json_decode( $data, true );
 	}
 
 	public function getSimple( string $entity )
@@ -47,7 +47,7 @@ class Request
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 			$response = $this->curl->get( $url );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
@@ -59,7 +59,7 @@ class Request
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
 			$response = $this->curl->get( $url );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
@@ -72,7 +72,7 @@ class Request
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
 			$response = $this->curl->get( $url );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
@@ -93,7 +93,7 @@ class Request
 
 			$response = $this->curl->get( $url );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
@@ -125,7 +125,7 @@ class Request
 
 			$response = $this->curl->post( $url, $requestData );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
@@ -141,7 +141,7 @@ class Request
 				'json'      => $data
 			] );
 
-			return $this->getData( $response->getBody() );
+			return $this->getData( $response->getBody() )['data'];
 		} catch ( \Exception $exception ) {
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}

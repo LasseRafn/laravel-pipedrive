@@ -43,20 +43,28 @@ class Model
 	 * @param array|null $fields
 	 * @param int        $start
 	 * @param int        $limit
+	 * @param array $parameters
 	 *
 	 * @return array
 	 */
-	public function all( array $fields = null )
+	public function all( array $fields = null, $parameters = [] )
 	{
 		$models  = [];
 		$hasMore = true;
 		$start   = 0;
 		$limit   = 500;
 
+		$query = '';
+
+		foreach ( $parameters as $q ) {
+			$attr  = key( $q );
+			$value = urlencode( $q[ $attr ] );
+			$query .= "&{$attr}={$value}";
+		}
 
 		while ( $hasMore ) {
 			try {
-				$items = $this->request->get( $this->entity, null, $fields, $start, $limit );
+				$items = $this->request->get( $this->entity, null, $fields, $start, $limit, $query );
 
 				if ( is_array( $items ) && count($items) > 0 ) {
 					foreach ( $items as $item ) {
