@@ -146,4 +146,19 @@ class Request
 			throw new CurlError( $exception->getMessage(), $exception->getCode() );
 		}
 	}
+
+	public function delete( string $entity, $id )
+	{
+		try {
+			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . $this->api_token;
+
+			$response = $this->curl->delete( $url, [
+				'api_token' => $this->api_token
+			] );
+
+			return $this->getData( $response->getBody() )['data'];
+		} catch ( \Exception $exception ) {
+			throw new CurlError( $exception->getMessage(), $exception->getCode() );
+		}
+	}
 }
