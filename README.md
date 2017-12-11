@@ -39,6 +39,16 @@ $pipedrive->persons()->all(); // Returns a collection of Person models.
 $pipedrive->persons()->find(1); // Returns a Person model.
 ```
 
+### Get a list of Activities that are not done
+
+Filters consist of an array of arrays. The first parameter is included fields, leave it at `null` to keep the default.
+
+``` php
+$pipedrive->activities()->all(null, [ [ 'done' => 0 ] ]);
+```
+
+(Later versions will switch to a single array key => value).
+
 ## Supported endpoints
 
 ... Todo
