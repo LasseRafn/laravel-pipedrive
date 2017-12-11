@@ -46,3 +46,5 @@ $pipedrive->persons()->find(1); // Returns a Person model.
 ## Testing
 
 ... Todo
+
+## [Contributors](https://github.com/LasseRafn/laravel-pipedrive/graphs/contributors)
