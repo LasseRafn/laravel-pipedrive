@@ -1,31 +1,36 @@
 {
-    "name": "lasserafn/laravel-pipedrive",
-    "description": "",
-    "keywords": ["laravel", "pipedrive", "api", "integration"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Lasse Rafn",
-            "email": "lasserafn@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-	"illuminate/support": "5.0.* || 5.1.* || 5.2.* || 5.3.* || 5.4.* || 5.5.*",
-	"guzzlehttp/guzzle": "^6.2"
-    },
-    "require-dev": {
-    },
-    "autoload": {
-        "psr-4": {
-            "LasseRafn\\Pipedrive\\": "src"
-        }
-    },
-    "extra":{
-        "laravel":{
-           "providers":[
-                "LasseRafn\\Pipedrive\\PipedriveServiceProvider"
-           ]
-        }
-    }
+	"name": "lasserafn/laravel-pipedrive",
+	"description": "",
+	"keywords": [
+		"laravel",
+		"pipedrive",
+		"api",
+		"integration"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Lasse Rafn",
+			"email": "lasserafn@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"illuminate/support": "5.0.* || 5.1.* || 5.2.* || 5.3.* || 5.4.* || 5.5.*",
+		"guzzlehttp/guzzle": "^6.2"
+	},
+	"require-dev": {
+	},
+	"autoload": {
+		"psr-4": {
+			"LasseRafn\\Pipedrive\\": "src"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"LasseRafn\\Pipedrive\\PipedriveServiceProvider"
+			]
+		}
+	}
 }
