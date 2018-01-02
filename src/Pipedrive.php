@@ -19,9 +19,12 @@ class Pipedrive
 {
 	protected $request;
 
-	public function __construct()
-	{
-		$this->request = new Request(config( 'pipedrive.endpoint' ));
+	public function __construct( $apiToken = null ) {
+		$this->request = new Request( config( 'pipedrive.endpoint' ) );
+
+		if ( $apiToken !== null ) {
+			$this->setApiToken( $apiToken );
+		}
 	}
 
 	/**
@@ -29,9 +32,8 @@ class Pipedrive
 	 *
 	 * @return $this
 	 */
-	public function setApiToken($token)
-	{
-		$this->request->setApiToken($token);
+	public function setApiToken( $token ) {
+		$this->request->setApiToken( $token );
 
 		return $this;
 	}
@@ -39,96 +41,84 @@ class Pipedrive
 	/**
 	 * @return Model|Person
 	 */
-	public function persons()
-	{
-		return new Person($this->request);
+	public function persons() {
+		return new Person( $this->request );
 	}
 
 	/**
 	 * @return Model|Organization
 	 */
-	public function organizations()
-	{
-		return new Organization($this->request);
+	public function organizations() {
+		return new Organization( $this->request );
 	}
 
 	/**
 	 * @return Model|Deal
 	 */
-	public function deals()
-	{
-		return new Deal($this->request);
+	public function deals() {
+		return new Deal( $this->request );
 	}
 
 	/**
 	 * @return Model|Product
 	 */
-	public function products()
-	{
-		return new Product($this->request);
+	public function products() {
+		return new Product( $this->request );
 	}
 
 	/**
 	 * @return Model|Stage
 	 */
-	public function stages()
-	{
-		return new Stage($this->request);
+	public function stages() {
+		return new Stage( $this->request );
 	}
 
 	/**
 	 * @return Model|Pipeline
 	 */
-	public function pipelines()
-	{
-		return new Pipeline($this->request);
+	public function pipelines() {
+		return new Pipeline( $this->request );
 	}
 
 	/**
 	 * @return Model|OrganizationField()
 	 */
-	public function organizationfields()
-	{
-		return new OrganizationField($this->request);
+	public function organizationfields() {
+		return new OrganizationField( $this->request );
 	}
 
 	/**
 	 * @return Model|Webhook()
 	 */
-	public function webhooks()
-	{
-		return new Webhook($this->request);
+	public function webhooks() {
+		return new Webhook( $this->request );
 	}
 
 	/**
 	 * @return Model|Activity()
 	 */
-	public function activities()
-	{
-		return new Activity($this->request);
+	public function activities() {
+		return new Activity( $this->request );
 	}
 
 	/**
 	 * @return Model|ActivityType()
 	 */
-	public function activityTypes()
-	{
-		return new ActivityType($this->request);
+	public function activityTypes() {
+		return new ActivityType( $this->request );
 	}
 
 	/**
 	 * @return Model|File()
 	 */
-	public function files()
-	{
-		return new File($this->request);
+	public function files() {
+		return new File( $this->request );
 	}
 
 	/**
 	 * @return Model|User()
 	 */
-	public function users()
-	{
-		return new User($this->request);
+	public function users() {
+		return new User( $this->request );
 	}
 }
