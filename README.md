@@ -1,4 +1,4 @@
-# Laravel Pipedrive api
+# Laravel Pipedrive API wrapper
 
 ## Installation
 
@@ -8,7 +8,7 @@
 composer require lasserafn/laravel-pipedrive
 ```
 
-2. (For laravel 5.4 and below) Add the PipedriveServiceProvider to your ````config/app.php```` providers array.
+2. (For laravel **5.4 and below**) Add the PipedriveServiceProvider to your ````config/app.php```` providers array.
 
 ``` php
 'providers' => [
@@ -16,13 +16,18 @@ composer require lasserafn/laravel-pipedrive
 ]
 ```
 
+3. Publish config file.
+
+``` bash
+$ php artisan vendor:publish --provider "LasseRafn\Pipedrive\PipedriveServiceProvider"
+```
+
 ## Usage
 
 ### Create Pipedrive Instance
 
 ``` php
-$pipedrive = new \LasseRafn\Pipedrive\Pipedrive();
-$pipedrive->setApiToken( 'api-key' );
+$pipedrive = new \LasseRafn\Pipedrive\Pipedrive($APIKEY); // or set the api key in the config/pipedrive.php file.
 ```
 
 To find your API key you must login to Pipedrive and navigate to Settings -> Personal -> Api (/settings#api)
