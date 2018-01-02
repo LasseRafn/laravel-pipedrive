@@ -22,8 +22,9 @@ class Person extends Model
 
 	public function setOrgIdAttribute( $org )
 	{
-		if ( is_array( $org ) ) {
-			return new Organization( $this->request, $org, true );
+		if ( \is_array( $org ) ) {
+			$org->id = $org->value;
+			return new Organization( $this->request, $org );
 		}
 
 		return $org;
