@@ -1,4 +1,10 @@
-# Laravel Pipedrive API wrapper
+# Laravel Pipedrive API wrapper 
+
+<p align="center"> 
+<a href="https://packagist.org/packages/LasseRafn/laravel-pipedrive"><img src="https://img.shields.io/packagist/dt/LasseRafn/laravel-pipedrive.svg?style=flat-square" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/LasseRafn/laravel-pipedrive"><img src="https://img.shields.io/packagist/v/LasseRafn/laravel-pipedrive.svg?style=flat-square" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/LasseRafn/laravel-pipedrive"><img src="https://img.shields.io/packagist/l/LasseRafn/laravel-pipedrive.svg?style=flat-square" alt="License"></a>
+</p>
 
 ## Installation
 
