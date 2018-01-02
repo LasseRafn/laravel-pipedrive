@@ -19,7 +19,7 @@ composer require lasserafn/laravel-pipedrive
 3. Publish config file.
 
 ``` bash
-$ php artisan vendor:publish --provider "LasseRafn\Pipedrive\PipedriveServiceProvider"
+php artisan vendor:publish --provider "LasseRafn\Pipedrive\PipedriveServiceProvider"
 ```
 
 ## Usage
