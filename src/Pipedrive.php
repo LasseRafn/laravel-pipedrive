@@ -121,4 +121,76 @@ class Pipedrive
 	public function users() {
 		return new User( $this->request );
 	}
+
+	/**
+	 * https://developers.pipedrive.com/docs/api/v1/#!/SearchResults/get_searchResults_field
+	 *
+	 * Term = search term
+	 * fieldType = one of: (dealField, personField, productField, organisationField)
+	 * fieldKey = internal Pipedrive ID for the field
+	 * returnItemIds = 0/1.
+	 * returnFieldKey = name of the field (if you want to override)
+	 * start = pagination start
+	 * limit = pagination items to return
+	 *
+	 * @param      $term
+	 * @param      $fieldType
+	 * @param      $fieldKey
+	 * @param int  $returnItemIds
+	 * @param null $returnFieldKey
+	 * @param int  $start
+	 * @param int  $limit
+	 *
+	 * @return array
+	 *
+	 * @throws Errors\CurlError
+	 */
+	public function searchByField( $term, $fieldType, $fieldKey, $returnItemIds = 0, $returnFieldKey = null, $start = 0, $limit = 100 ) {
+		return $this->request->getRaw( '/searchResults/field', [
+			'term'             => $term,
+			'exact_match'      => 0,
+			'field_type'       => $fieldType,
+			'field_key'        => $fieldKey,
+			'return_field_key' => $returnFieldKey,
+			'return_item_ids'  => $returnItemIds,
+			'start'            => $start,
+			'limit'            => $limit
+		] );
+	}
+
+	/**
+	 * https://developers.pipedrive.com/docs/api/v1/#!/SearchResults/get_searchResults_field
+	 *
+	 * Term = search term
+	 * fieldType = one of: (dealField, personField, productField, organisationField)
+	 * fieldKey = internal Pipedrive ID for the field
+	 * returnItemIds = 0/1.
+	 * returnFieldKey = name of the field (if you want to override)
+	 * start = pagination start
+	 * limit = pagination items to return
+	 *
+	 * @param      $term
+	 * @param      $fieldType
+	 * @param      $fieldKey
+	 * @param int  $returnItemIds
+	 * @param null $returnFieldKey
+	 * @param int  $start
+	 * @param int  $limit
+	 *
+	 * @return array
+	 *
+	 * @throws Errors\CurlError
+	 */
+	public function exactSearchByField( $term, $fieldType, $fieldKey, $returnItemIds = 0, $returnFieldKey = null, $start = 0, $limit = 100 ) {
+		return $this->request->getRaw( '/searchResults/field', [
+			'term'             => $term,
+			'exact_match'      => 1,
+			'field_type'       => $fieldType,
+			'field_key'        => $fieldKey,
+			'return_field_key' => $returnFieldKey,
+			'return_item_ids'  => $returnItemIds,
+			'start'            => $start,
+			'limit'            => $limit
+		] );
+	}
 }

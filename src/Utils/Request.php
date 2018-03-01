@@ -10,8 +10,7 @@ class Request
 	protected $api_token;
 	public    $curl;
 
-	public function __construct( $baseUri = '' )
-	{
+	public function __construct( $baseUri = '' ) {
 		$this->api_token = config( 'pipedrive.api_token' );
 
 		$this->curl = new Client( [
@@ -24,25 +23,21 @@ class Request
 	 *
 	 * @return $this
 	 */
-	public function setApiToken( $token )
-	{
+	public function setApiToken( $token ) {
 		$this->api_token = $token;
 
 		return $this;
 	}
 
-	private function buildEntity( $entity, $id = null, $fields = null )
-	{
+	private function buildEntity( $entity, $id = null, $fields = null ) {
 		return $fields ? $entity . ':(' . implode( ',', $fields ) . ')' . ( $id ? '/' . $id : '' ) : $entity . ( $id ? '/' . $id : '' );
 	}
 
-	private function getData( $data )
-	{
+	private function getData( $data ) {
 		return json_decode( $data, true );
 	}
 
-	public function getSimple( string $entity )
-	{
+	public function getSimple( string $entity ) {
 		try {
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 			$response = $this->curl->get( $url );
@@ -53,8 +48,7 @@ class Request
 		}
 	}
 
-	public function get( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100, $query = '' )
-	{
+	public function get( string $entity, int $id = null, array $fields = null, int $start = 0, int $limit = 100, $query = '' ) {
 		try {
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity, $id, $fields ) . '?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . $query;
 			$response = $this->curl->get( $url );
@@ -65,8 +59,21 @@ class Request
 		}
 	}
 
-	public function getBy( string $entity, $attr, $value, int $start = 0, int $limit = 1 )
-	{
+	public function getRaw( $relativeUrl, $query = [] ) {
+		try {
+			$url      = config( 'pipedrive.endpoint' ) . $relativeUrl;
+
+			$response = $this->curl->get( $url, [
+				'query' => array_merge( [ 'api_token' => $this->api_token ], $query )
+			] );
+
+			return $this->getData( $response->getBody() )['data'];
+		} catch ( \Exception $exception ) {
+			throw new CurlError( $exception->getMessage(), $exception->getCode() );
+		}
+	}
+
+	public function getBy( string $entity, $attr, $value, int $start = 0, int $limit = 1 ) {
 		try {
 			$value    = urlencode( $value );
 			$url      = config( 'pipedrive.endpoint' ) . $this->buildEntity( $entity ) . '/find?api_token=' . $this->api_token . '&start=' . $start . '&limit=' . $limit . "&{$attr}={$value}";
@@ -78,8 +85,7 @@ class Request
 		}
 	}
 
-	public function getByMany( string $entity, $queries, int $start = 0, int $limit = 1 )
-	{
+	public function getByMany( string $entity, $queries, int $start = 0, int $limit = 1 ) {
 		try {
 			$query = '';
 
@@ -99,8 +105,7 @@ class Request
 		}
 	}
 
-	public function post( string $entity, $data = [], $multipartFormData = null )
-	{
+	public function post( string $entity, $data = [], $multipartFormData = null ) {
 		try {
 			$url = $this->buildEntity( $entity ) . '?api_token=' . $this->api_token;
 
@@ -118,8 +123,7 @@ class Request
 						'contents' => $value
 					];
 				}
-			}
-			else {
+			} else {
 				$requestData['json'] = $data;
 			}
 
@@ -131,8 +135,7 @@ class Request
 		}
 	}
 
-	public function put( string $entity, $id, $data = [] )
-	{
+	public function put( string $entity, $id, $data = [] ) {
 		try {
 			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . $this->api_token;
 
@@ -147,8 +150,7 @@ class Request
 		}
 	}
 
-	public function delete( string $entity, $id )
-	{
+	public function delete( string $entity, $id ) {
 		try {
 			$url = $this->buildEntity( $entity, $id ) . '?api_token=' . $this->api_token;
 
